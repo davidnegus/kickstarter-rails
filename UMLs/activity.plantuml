@@ -1,0 +1,30 @@
+@startuml activity diagram
+    start
+        repeat 
+        
+        :look up the user;
+            
+            if (found user) then (yes)
+                if (authenticate password) then (yes)
+                    :log user in;
+                    
+                else(no)
+                    repeat
+                        :redirect to retry login;    
+                    repeat while (authenticate password)is (no)
+                    :log user in;
+                    ->yes;
+                endif
+            
+            else(no)
+                :redirect to create user;
+                
+            endif
+        
+        repeat while(user logged in?) is (no)
+
+        ->logged in;
+        :projects page;
+        
+    end
+@enduml

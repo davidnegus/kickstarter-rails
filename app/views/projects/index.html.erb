@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<header style="display:flex;">
+<h1 style="flex:auto">Projects</h1>
+<div style="display:block;">
+    <h3 style="float:right; clear:both">Logged in as: <%=@user.email%></h3>
+    <h3 style="float:right; clear:both"><%=link_to "Logout", session_path(:session), method: :delete%></h3>
+</div>
+</header>
+<hr>
+<%@projects.each do |project|%>
+
+    <div style="border:2px solid black; margin:2px; padding:5px;">
+        <h4><%=link_to project.title, project_url(project)%></h4>
+
+        <div>
+            <p>Goal: £<%=project.goal%></p>
+            <p>Current total: £<%=project.pledges.reduce(0) {|total, p| total + p.amount}%></p>
+        </div>
+
+        <%# percentage variable %>
+        <%  @current =  project.pledges.reduce(0) {|total, p| total + p.amount}
+            @goal = project.goal
+            @percentage = (@current.to_f.round(2) / @goal.to_f.round(2)) * 100
+        %>
+
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="<%=@percentage%>"
+                aria-valuemin="0" aria-valuemax="<%=@goal%>" style="width:<%=@percentage > 100.to_f ? 100 : @percentage%>%">
+
+                    
+
+                    <%=@percentage > 100.to_f ? 100 : @percentage%>%
+            </div>
+        </div>
+
+        <%=form_with model: project, method: :delete, local: true do |f|%>
+            <%=f.submit value="delete"%>
+        <%end %>
+
+      
+
+    </div>
+
+<%end%>
+
+<hr>
+
+<div style="margin:auto; text-align:center; padding:5px; border: 2px solid black; width: 50%">
+    <h2>Create A Project</h2>
+
+    <%=form_with model: @project, local: true do |f|%>
+        <p>Title:</p>
+        <%=f.text_field :title, required: true, placholder: "Title"%>
+        <p>Goal:</p>
+        <%=f.number_field :goal, required: true%>
+        <p style="margin: 20px 0 25px;"><%=f.submit value: "Create project"%></p>
+    <%end%>
+
+</div>

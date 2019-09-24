@@ -1,0 +1,11 @@
+
+
+
+<%=form_with model: @user, local: true do |f|%>
+
+    <%=f.text_field :email, type: :email, required: true%>
+    <%=f.password_field :password, required: true%>
+    <%# <%=f.password_field :password, required: true%>
+    <%=f.submit value: "Create user"%>
+
+<%end%>

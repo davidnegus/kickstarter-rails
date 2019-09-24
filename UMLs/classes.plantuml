@@ -1,0 +1,41 @@
+@startuml static class diagram
+
+    ' full diamond = composite, i.e needs = --*
+    ' hollow diamond = aggregate, i.e does not need
+    ' hollow arrow = inherits from = --|>
+    ' see plantuml.com
+
+    class ActiveRecord {
+        create()
+        all()
+        destroy()
+    }
+
+    class User {
+        id:int
+        username:string
+        password_digest:string
+
+    }
+
+    class Project {
+        id:int
+        title:string
+        goal:int
+    }
+
+    class Pledge {
+        id:int
+        amount:int
+        user_id:int
+        project_id:int
+    }
+
+    User --|> ActiveRecord
+    Project --|> ActiveRecord
+    Pledge --|> ActiveRecord
+
+    User::id --* Pledge::user_id
+    Project::id --* Pledge::project_id
+
+@enduml

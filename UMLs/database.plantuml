@@ -1,0 +1,29 @@
+@startuml database diagram
+
+    !define table(table_name) class table_name << T, #FFAAAA>>
+
+    table(users) {
+        id: int
+        username: string
+        password_digest: digest
+    }
+
+    table(projects) {
+        id:int
+        goal: int
+        title: string
+    }
+
+    table(pledges) {
+        id:int
+        amount:int
+        user_id:int
+        project_id:int
+    }
+
+    users::id ---( pledges::user_id
+    projects::id ---( pledges::project_id
+
+@enduml
+
+' alt+d shortcut to preview

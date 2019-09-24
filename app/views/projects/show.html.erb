@@ -1,0 +1,18 @@
+<header style="display:flex;">
+    <h1 style="flex:auto;"><%=@project.title%></h1>
+    <%=link_to "Homepage", projects_url%>
+</header>
+
+<hr>
+<h2>Goal: £<%=@project.goal%></h2>
+<h2>Pledges:</h2>
+<hr>
+
+<%@project.pledges.each do |pledge|%>
+    <p><%=pledge.user.email%> donated: £<%=pledge.amount%></p>
+<%end%>
+
+<%=form_with model: [@project, @project.pledges.build] do |pledge|%>
+    <%=pledge.number_field :amount, required: true, placeholder: "£" %>
+    <%=pledge.submit value: "Donate" %>
+<%end%>

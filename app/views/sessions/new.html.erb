@@ -1,0 +1,7 @@
+<h1>Log In</h1>
+
+<%=form_with scope: :session, url: sessions_path, local: true do |f|%>
+    <%=f.text_field :email, placeholder: "Email"%>
+    <%=f.password_field :password, type: :password%>
+    <%=f.submit value: "Log me in !"%>
+<%end%>
